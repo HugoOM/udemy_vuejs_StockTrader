@@ -8,14 +8,17 @@
         <h5 class="card-title">Price : {{ price | floatToLocaleCurrency }}</h5>
         <label>Quantity : </label>
         <span v-if="isBuyingAvailable">
-          <input type="text" class="form-control" v-model.number="buyQty" style="width: 75%">
-          <br>
-          <button class="btn" style="width: 15%" @click="buyStocks">Buy</button>
+          <div class="input-group">
+            <input type="text" class="form-control" v-model.number="buyQty" style="width: 75%">
+            <span class="input-group-btn">
+              <button class="btn btn-primary" style="margin-left: 5px" @click="buyStocks">Buy</button>
+            </span>
+          </div>
         </span>
         <span v-else>
-          <p>{{ quantity }}</p>
+          <p>{{ sellQty }}</p>
           <br>
-          <button class="btn btn-primary">Sell</button>
+          <button class="btn btn-primary" @click="sellStocks">Sell</button>
         </span>
       </div>
     </div>
@@ -39,6 +42,8 @@ export default {
   },
   methods: {
     buyStocks() {
+      if (!this.buyQty) return;
+
       if (this.$store.getters["user/getUserFunds"] < this.price * this.buyQty)
         return alert("Insufficient Funds !");
 
@@ -49,6 +54,15 @@ export default {
       });
 
       this.buyQty = 0;
+    },
+    sellStocks() {
+      if (!this.sellQty) return;
+
+      this.$store.dispatch("user/sellStocks", {
+        stockName: this.name,
+        price: this.price,
+        quantity: this.sellQty
+      });
     }
   },
   mixins: [filterMixin]

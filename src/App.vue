@@ -3,7 +3,7 @@
     <app-header></app-header>
     <br><br>
     <div class="container alert" style="border: 0.5px solid lightgray; border-radius: 5px;">
-      <router-view></router-view>
+      <router-view :key="$route.fullPath"></router-view>
     </div>
   </div>
 </template>
