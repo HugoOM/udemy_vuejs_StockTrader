@@ -6,14 +6,14 @@
       <router-link tag="span" to="/stocks">Stocks</router-link>
     </div>
     <div class="customAppHeaderLinkContainer">
-      <span>End Day</span>
-      <div class="dropdown" :class="{show: isSaveLoadDropdownOpen}" @click="saveLoadDropdownToggle">
+      <span @click="endDay">End Day</span>
+      <div class="dropdown" :class="{show: isSaveLoadDropdownOpen}" @mouseover="saveLoadDropdownToggle" @mouseout="saveLoadDropdownToggle">
         <span class="dropdown-toggle" data-toggle="dropdown">
           Save &amp; Load
         </span>
-        <div class="dropdown-menu" :class="{show: isSaveLoadDropdownOpen}">
-          <span class="dropdown-item">Save</span>
-          <span class="dropdown-item">Load</span>
+        <div class="dropdown-menu" :class="{show: isSaveLoadDropdownOpen}" style="cursor: pointer">
+          <a class="dropdown-item" @click="saveCompleteStateToDatabase">Save</a>
+          <a class="dropdown-item" @click="loadCompleteStateFromDatabase">Load</a>
         </div>
       </div>
       <span style="cursor: default">Funds : {{ funds | floatToLocaleCurrency }}</span>
@@ -33,6 +33,18 @@ export default {
   methods: {
     saveLoadDropdownToggle() {
       this.isSaveLoadDropdownOpen = !this.isSaveLoadDropdownOpen;
+    },
+    endDay() {
+      this.$store.dispatch("stocks/updateStockPrices");
+    },
+    saveCompleteStateToDatabase() {
+      this.$http.put("data.json", this.$store.state);
+    },
+    loadCompleteStateFromDatabase() {
+      /* State Hydration from Firebase DB */
+      this.$http.get("data.json").then(data => {
+        this.$store.replaceState(data.body);
+      });
     }
   },
   computed: {
@@ -51,7 +63,6 @@ export default {
   justify-content: space-between;
   align-items: center;
   white-space: nowrap;
-  /* overflow: hidden;  */
 }
 
 .customAppHeaderLinkContainer {

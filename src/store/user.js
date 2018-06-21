@@ -1,6 +1,5 @@
 const state = {
   user: {
-    name: 'Bamboo',
     funds: 10000,
     portfolio: {
       microsoft: 0,
@@ -12,9 +11,6 @@ const state = {
 }
 
 const getters = {
-  getUserName(state) {
-    return state.user.name
-  },
   getUserFunds(state) {
     return state.user.funds
   },

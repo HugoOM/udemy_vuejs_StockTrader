@@ -27,18 +27,23 @@ const getters = {
 
 const mutations = {
   setStockPrice(state, payload) {
-    state[payload.stockName].price = payload.quantity
-  },
-  addStock(state, payload) {
-    if (state[payload.stockName]) return; /* Throw Error ? */
-
-    state[payload.stockName] = {
-      price: payload.price
-    }
+    state.stocks.find(stock => stock.name === payload.stockName).price = payload.price
   }
 }
 
-const actions = {}
+const actions = {
+  updateStockPrices(context, payload) {
+    let currentStocks = context.getters['getStocks'];
+
+    /* TODO: Randomize price variation */
+    currentStocks.forEach(stock => {
+      context.commit('setStockPrice', {
+        stockName: stock.name,
+        price: stock.price + 10
+      })
+    })
+  }
+}
 
 export default {
   state,

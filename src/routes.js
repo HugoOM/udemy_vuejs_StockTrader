@@ -1,7 +1,11 @@
+import Vue from 'vue'
+import VueRouter from 'vue-router';
 import Home from './components/Home.vue'
 import Stocks from './components/Stocks.vue'
 
-export default [{
+Vue.use(VueRouter);
+
+const routes = [{
     path: '/',
     name: 'home',
     component: Home
@@ -21,3 +25,8 @@ export default [{
     props: true
   }
 ]
+
+export default new VueRouter({
+  routes,
+  mode: 'history'
+});
