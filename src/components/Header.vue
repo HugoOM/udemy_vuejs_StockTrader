@@ -38,7 +38,20 @@ export default {
       this.$store.dispatch("stocks/updateStockPrices");
     },
     saveCompleteStateToDatabase() {
-      this.$http.put("data.json", this.$store.state);
+      this.$http.put("data.json", this.$store.state).then(
+        response => {
+          this.$store.commit("messages/setLoadAndSaveMessage", {
+            status: response.statusText,
+            message: "Session Saved Successfuly"
+          });
+        },
+        error => {
+          this.$store.commit("messages/setLoadAndSaveMessage", {
+            status: error.statusText,
+            message: error.message
+          });
+        }
+      );
     },
     loadCompleteStateFromDatabase() {
       /* State Hydration from Firebase DB */

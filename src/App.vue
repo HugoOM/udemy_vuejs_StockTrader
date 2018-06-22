@@ -21,6 +21,11 @@ export default {
     appHeader,
     appHome,
     appToast
+  },
+  computed: {
+    calloutResponse_LoadAndSave() {
+      return this.$store.getters["messages/getLoadAndSave"];
+    }
   }
 };
 </script>
