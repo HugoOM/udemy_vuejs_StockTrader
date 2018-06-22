@@ -11,7 +11,7 @@ const getters = {
 const mutations = {
   setLoadAndSaveMessage(state, payload) {
     state.messages.loadAndSave = {
-      status: payload.status,
+      success: payload.success,
       message: payload.message
     }
   },

@@ -41,13 +41,13 @@ export default {
       this.$http.put("data.json", this.$store.state).then(
         response => {
           this.$store.commit("messages/setLoadAndSaveMessage", {
-            status: response.statusText,
+            success: response.ok,
             message: "Session Saved Successfuly"
           });
         },
         error => {
           this.$store.commit("messages/setLoadAndSaveMessage", {
-            status: error.statusText,
+            success: false,
             message: error.message
           });
         }
@@ -55,9 +55,23 @@ export default {
     },
     loadCompleteStateFromDatabase() {
       /* State Hydration from Firebase DB */
-      this.$http.get("data.json").then(data => {
-        this.$store.replaceState(data.body);
-      });
+      this.$http.get("data.json").then(
+        response => {
+          this.$store.commit("user/setUserFromDB", response.body.user);
+          this.$store.commit("stocks/setStocksFromDB", response.body.stocks);
+
+          this.$store.commit("messages/setLoadAndSaveMessage", {
+            success: response.ok,
+            message: "Session Loaded Successfuly"
+          });
+        },
+        error => {
+          this.$store.commit("messages/setLoadAndSaveMessage", {
+            success: false,
+            message: error.message
+          });
+        }
+      );
     }
   },
   computed: {

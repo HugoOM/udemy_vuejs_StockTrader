@@ -9,7 +9,7 @@
         <div 
           v-if="saveAndLoadMessage"
           class="col-6 alert" 
-          :class="{'alert-success': saveAndLoadMessage.status === 'OK','alert-danger': saveAndLoadMessage.status !== 'OK'}"
+          :class="{'alert-success': saveAndLoadMessage.success,'alert-danger': !saveAndLoadMessage.success}"
           >
           <span>{{ saveAndLoadMessage.message }}</span>
           <!-- Issue with vertical centering of the button if not forcing padding to be 0 -->

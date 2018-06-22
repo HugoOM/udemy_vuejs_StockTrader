@@ -28,6 +28,11 @@ const getters = {
 const mutations = {
   setStockPrice(state, payload) {
     state.stocks.find(stock => stock.name === payload.stockName).price = payload.price
+  },
+  setStocksFromDB(state, payload) {
+    for (let prop in payload) {
+      state[prop] = payload[prop]
+    }
   }
 }
 
