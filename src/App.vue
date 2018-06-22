@@ -1,9 +1,10 @@
 <template>
   <div id="app" style="margin-top:20px">
     <app-header></app-header>
+    <app-toast></app-toast>
     <br>
     <div class="container">
-      <transition name="fade" mode="out-in">
+      <transition name="fade" mode="out-in" appear>
             <router-view :key="$route.fullPath"></router-view>
       </transition>
     </div>
@@ -13,38 +14,25 @@
 <script>
 import appHeader from "./components/Header.vue";
 import appHome from "./components/Home.vue";
+import appToast from "./components/ToastNotification.vue";
 
 export default {
   components: {
     appHeader,
-    appHome
+    appHome,
+    appToast
   }
 };
 </script>
 
 <style>
-.fade-enter {
-  /* opacity: 0; */
-  /* max-height: 0px; */
-}
-
 .fade-enter-active {
-  /* transition: max-height 1s ease-in;
-  overflow: hidden;
-  max-height: 500px; */
-  animation: grow 0.75s ease-out forwards;
+  animation: grow 0.5s ease-out forwards;
   overflow: hidden;
 }
-
-/* .fade-leave {
-} */
 
 .fade-leave-active {
-  /* transition: max-height 1s;
-  overflow: hidden;  animation: grow 2s ease-out forwards;
-  max-height: 0px; */
-  /* opacity: 0; */
-  animation: shrink 0.75s ease-out forwards;
+  animation: shrink 0.5s ease-out forwards;
   overflow: hidden;
 }
 

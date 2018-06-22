@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import appStock from "./stock.vue";
+import appStock from "./Stock.vue";
 
 export default {
   computed: {
